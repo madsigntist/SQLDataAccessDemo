@@ -12,11 +12,10 @@ namespace FormUI
     public class DataAccess
     {
         public List<Product> GetProduct(string itemNumber)
-        {
+        {            
             using IDbConnection connection = new SqlConnection(Helper.CnnVal("CRUDwinformProductDemo"));
-            {            
-                var output = connection.Query<Product>($"select * from Product where ItemNumber = '{ itemNumber }'").ToList();
-                //var output = connection.Query<Product>("dbo.spProduct_Get @ItemNumber", new { ItemNumber = itemNumber }).ToList();
+            {                
+                var output = connection.Query<Product>("dbo.spProduct_Get @ItemNumber", new { ItemNumber = itemNumber }).ToList(); 
                 return output;
             }
         }
@@ -41,11 +40,10 @@ namespace FormUI
         }
 
         public void DeleteProduct(string itemNumber)
-        {
+        {         
             using IDbConnection connection = new SqlConnection(Helper.CnnVal("CRUDwinformProductDemo"));
-            {          
-                //connection.Execute("dbo.spProduct_Delete @ItemNumber", new { ItemNumber = itemNumber });
-                connection.Execute($"delete from Product where ItemNumber = '{ itemNumber }'");
+            {                           
+                connection.Execute("dbo.spProduct_Delete @ItemNumber", new { ItemNumber = itemNumber }); 
             }
         }
     }
